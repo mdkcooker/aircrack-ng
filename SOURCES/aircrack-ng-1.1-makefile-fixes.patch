@@ -1,0 +1,113 @@
+--- aircrack-ng-1.1/common.mak.make_makeup~	2010-02-13 23:32:28.000000000 +0100
++++ aircrack-ng-1.1/common.mak	2010-08-05 03:23:29.247432868 +0200
+@@ -31,16 +31,16 @@ COMMON_CFLAGS   += -DCYGWIN
+ endif
+ 
+ ifeq ($(SQLITE), true)
+-    COMMON_CFLAGS	+= -I/usr/local/include -DHAVE_SQLITE
++    COMMON_CFLAGS	+= $(shell pkg-config --cflags sqlite3) -DHAVE_SQLITE -DHAVE_REGEXP
+ else
+     ifeq ($(sqlite), true)
+-        COMMON_CFLAGS	+= -I/usr/local/include -DHAVE_SQLITE
++        COMMON_CFLAGS	+= $(shell pkg-config --cflags sqlite3) -DHAVE_SQLITE -DHAVE_REGEXP
+     else
+         ifeq ($(SQLITE), TRUE)
+-            COMMON_CFLAGS	+= -I/usr/local/include -DHAVE_SQLITE
++            COMMON_CFLAGS	+= $(shell pkg-config --cflags sqlite3) -DHAVE_SQLITE -DHAVE_REGEXP
+         else
+             ifeq ($(sqlite), TRUE)
+-                COMMON_CFLAGS	+= -I/usr/local/include -DHAVE_SQLITE
++                COMMON_CFLAGS	+= $(shell pkg-config --cflags sqlite3) -DHAVE_SQLITE -DHAVE_REGEXP
+             endif
+         endif
+     endif
+@@ -66,15 +66,15 @@ AR		= $(TOOL_PREFIX)ar
+ REVISION	= $(shell $(AC_ROOT)/evalrev)
+ REVFLAGS	= -D_REVISION=$(REVISION)
+ 
+-OPTFLAGS        = -D_FILE_OFFSET_BITS=64
++OPTFLAGS        = $(shell getconf  LFS_CFLAGS)
+ CFLAGS          ?= -g -W -Wall -Werror -O3
+ CFLAGS          += $(OPTFLAGS) $(REVFLAGS) $(COMMON_CFLAGS)
+ 
+ prefix          = /usr/local
+ bindir          = $(prefix)/bin
+ sbindir         = $(prefix)/sbin
+-mandir          = $(prefix)/man/man1
++mandir          = $(prefix)/man
+ datadir         = $(prefix)/share
+ docdir          = $(datadir)/doc/aircrack-ng
+ libdir		= $(prefix)/lib
+-etcdir		= $(prefix)/etc/aircrack-ng 
+\ No newline at end of file
++etcdir		= $(prefix)/etc/aircrack-ng 
+--- aircrack-ng-1.1/manpages/Makefile.make_makeup~	2009-02-20 18:43:30.000000000 +0100
++++ aircrack-ng-1.1/manpages/Makefile	2010-08-05 03:19:56.167428259 +0200
+@@ -47,13 +47,13 @@ all:
+ 	@echo Nothing to do
+ 	
+ install: uninstall
+-	install -d $(DESTDIR)$(mandir)
+-	install -m 644 $(MP_FILES) $(DESTDIR)$(mandir)
++	install -d $(DESTDIR)$(mandir)/man1
++	install -m 644 $(MP_FILES) $(DESTDIR)$(mandir)/man1
+ 
+ uninstall:
+-	@-$(foreach CUR_MP,$(MP_FILES), rm -f $(DESTDIR)$(mandir)/$(CUR_MP); echo rm -f $(DESTDIR)$(mandir)/$(CUR_MP); ) 
+-	-rm -f $(DESTDIR)$(mandir)/airolib-ng.1
+-	-rm -f $(DESTDIR)$(mandir)/wesside-ng.1
+-	-rm -f $(DESTDIR)$(mandir)/tkiptun-ng.1
+-	-rm -f $(DESTDIR)$(mandir)/buddy-ng.1
+-	-rm -f $(DESTDIR)$(mandir)/easside-ng.1
++	@-$(foreach CUR_MP,$(MP_FILES), rm -f $(DESTDIR)$(mandir)/man1/$(CUR_MP); echo rm -f $(DESTDIR)$(mandir)/man1/$(CUR_MP); ) 
++	-rm -f $(DESTDIR)$(mandir)/man1/airolib-ng.1
++	-rm -f $(DESTDIR)$(mandir)/man1/wesside-ng.1
++	-rm -f $(DESTDIR)$(mandir)/man1/tkiptun-ng.1
++	-rm -f $(DESTDIR)$(mandir)/man1/buddy-ng.1
++	-rm -f $(DESTDIR)$(mandir)/man1/easside-ng.1
+--- aircrack-ng-1.1/scripts/airgraph-ng/common.mak.make_makeup~	2009-02-10 06:05:30.000000000 +0100
++++ aircrack-ng-1.1/scripts/airgraph-ng/common.mak	2010-08-05 03:19:56.168433614 +0200
+@@ -1,6 +1,6 @@
+ prefix          = /usr/local
+ bindir          = $(prefix)/bin
+-mandir          = $(prefix)/man/man1
++mandir          = $(prefix)/man
+ datadir         = $(prefix)/share
+ docdir          = $(datadir)/doc/airgraph-ng
+ libdir          = $(prefix)/lib
+--- aircrack-ng-1.1/src/Makefile.make_makeup~	2010-02-13 23:32:28.000000000 +0100
++++ aircrack-ng-1.1/src/Makefile	2010-08-05 03:21:38.991315747 +0200
+@@ -96,19 +96,19 @@ LIBS		+= -liphlpapi -lsetupapi -luuid
+ endif
+ LIBOSD		= $(OSD)/lib$(OSD).a
+ 
+-LIBSSL		= -lssl -lcrypto $(LDFLAGS)
++LIBSSL		= $(shell pkg-config --libs openssl)
+ LIBSQL		=
+ ifeq ($(SQLITE), true)
+-	LIBSQL		= -L/usr/local/lib -lsqlite3
++	LIBSQL		= $(shell pkg-config --libs sqlite3)
+ else
+ 	ifeq ($(sqlite), true)
+-		LIBSQL          = -L/usr/local/lib -lsqlite3
++		LIBSQL          = $(shell pkg-config --libs sqlite3)
+ 	else
+ 		ifeq ($(SQLITE), TRUE)
+-			LIBSQL          = -L/usr/local/lib -lsqlite3
++			LIBSQL          = $(shell pkg-config --libs sqlite3)
+ 		else
+ 			ifeq ($(sqlite), TRUE)
+-				LIBSQL          = -L/usr/local/lib -lsqlite3
++				LIBSQL          = $(shell pkg-config --libs sqlite3)
+ 			endif
+ 		endif
+ 	endif
+@@ -179,7 +179,7 @@ makeivs-ng$(EXE): $(OBJS_MI)
+ 	$(CC) $(CFLAGS) $(OBJS_MI) -o $(@)
+ 
+ airolib-ng$(EXE): $(OBJS_AL)
+-	$(CC) $(CFLAGS) $(OBJS_AL) -o $(@) $(LIBSSL) -DHAVE_REGEXP $(LIBSQL)
++	$(CC) $(CFLAGS) $(OBJS_AL) -o $(@) $(LIBSSL) $(LIBSQL)
+ 
+ airbase-ng$(EXE): $(OBJS_AB) $(LIBOSD)
+ 	$(CC) $(CFLAGS) $(OBJS_AB) -o $(@) $(LIBS) $(LIBSSL) -lpthread
