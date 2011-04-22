@@ -11,7 +11,6 @@ Patch1:		aircrack-ng-1.1-airodump-oui-destdir.patch
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
 BuildRequires:	sqlite3-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 aircrack-ng is a set of tools for auditing wireless networks. It's an 
