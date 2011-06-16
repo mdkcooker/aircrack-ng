@@ -26,16 +26,22 @@ etc.).
 %patch1 -p1 -b .oui_destdir~
 
 %build
-export CFLAGS="%{optflags} -O3" LDFLAGS="%{ldflags}" SQLITE=true UNSTABLE=true
-%make datadir=%{_datadir} || make datadir=%{_datadir}
+export CFLAGS="%{optflags} -O3"
+export LDFLAGS="%{ldflags}"
+%make datadir=%{_datadir} unstable=true sqlite=true
 
 %install
 %{__rm} -rf %{buildroot}
-%makeinstall SQLITE=true UNSTABLE=true
-DESTDIR=%{buildroot} sh ./scripts/airodump-ng-oui-update
+%makeinstall unstable=true sqlite=true
+
+mkdir -p %{buildroot}%{_datadir}/%{name}
+touch %{buildroot}%{_datadir}/%{name}/airodump-ng-oui.txt
 
 %clean
 %{__rm} -rf %{buildroot}
+
+%post 
+%{_sbindir}/airodump-ng-oui-update
 
 %files
 %defattr(-,root,root)
@@ -44,6 +50,4 @@ DESTDIR=%{buildroot} sh ./scripts/airodump-ng-oui-update
 %{_sbindir}/*
 %{_mandir}/man1/*.1*
 %dir %{_datadir}/aircrack-ng
-%{_datadir}/aircrack-ng/airodump-ng-oui.txt
-
-
+%ghost %{_datadir}/aircrack-ng/airodump-ng-oui.txt
