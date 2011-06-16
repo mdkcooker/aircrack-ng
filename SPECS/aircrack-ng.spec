@@ -28,7 +28,7 @@ etc.).
 %build
 export CFLAGS="%{optflags} -O3"
 export LDFLAGS="%{ldflags}"
-%make datadir=%{_datadir} unstable=true sqlite=true
+%make -j4 datadir=%{_datadir} unstable=true sqlite=true
 
 %install
 %{__rm} -rf %{buildroot}
