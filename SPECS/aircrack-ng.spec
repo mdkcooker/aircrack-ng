@@ -1,6 +1,6 @@
 Name:		aircrack-ng
 Version:	1.1
-Release:	%mkrel 2
+Release:	%mkrel 3
 Summary:	Reliable 802.11 (wireless) sniffer and WEP key cracker
 License:	GPLv2+
 Group:		Networking/Other
@@ -28,6 +28,8 @@ etc.).
 %build
 export CFLAGS="%{optflags} -O3"
 export LDFLAGS="%{ldflags}"
+# unstable=true needed for wesside-ng, easside-ng, buddy-ng and tkiptun-ng
+# (also needed in make install)
 %make -j4 datadir=%{_datadir} unstable=true sqlite=true
 
 %install
@@ -35,16 +37,14 @@ export LDFLAGS="%{ldflags}"
 %makeinstall unstable=true sqlite=true
 
 mkdir -p %{buildroot}%{_datadir}/%{name}
+# License unclear, originates from:
+# http://standards.ieee.org/regauth/oui/oui.txt
 touch %{buildroot}%{_datadir}/%{name}/airodump-ng-oui.txt
-
-%clean
-%{__rm} -rf %{buildroot}
 
 %post 
 %{_sbindir}/airodump-ng-oui-update
 
 %files
-%defattr(-,root,root)
 %doc ChangeLog README AUTHORS VERSION 
 %{_bindir}/*
 %{_sbindir}/*
