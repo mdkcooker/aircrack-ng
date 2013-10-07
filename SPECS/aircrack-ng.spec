@@ -1,6 +1,6 @@
 Name:		aircrack-ng
 Version:	1.1
-Release:	%mkrel 5
+Release:	%mkrel 6
 Summary:	Reliable 802.11 (wireless) sniffer and WEP key cracker
 License:	GPLv2+
 Group:		Networking/Other
@@ -8,7 +8,8 @@ URL:		http://www.aircrack-ng.org/doku.php
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
 Patch0:		aircrack-ng-1.1-makefile-fixes.patch
 Patch1:		aircrack-ng-1.1-airodump-oui-destdir.patch
-Patch2:     aircrack-ng-1.1-ignore-channel-1-error.patch
+Patch2:		aircrack-ng-1.1-ignore-channel-1-error.patch
+Patch3:		aircrack-ng-1.1-CVE-2010-1159.patch
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
 BuildRequires:	sqlite3-devel
@@ -26,6 +27,7 @@ etc.).
 %patch0 -p1 -b .make_makeup~
 %patch1 -p1 -b .oui_destdir~
 %patch2 -p1
+%patch3 -p0 -b .CVE-2010-1159
 
 %build
 export CFLAGS="%{optflags} -O3"
