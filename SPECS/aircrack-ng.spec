@@ -43,7 +43,7 @@ touch %{buildroot}%{_datadir}/%{name}/airodump-ng-oui.txt
 
 # move manual pages to a correct location
 mkdir -p %{buildroot}%{_mandir}/man1
-mv %{buildroot}%{_mandir}/*.1.* %{buildroot}%{_mandir}/man1/
+mv %{buildroot}%{_mandir}/*.1 %{buildroot}%{_mandir}/man1/
 
 %post
 %{_sbindir}/airodump-ng-oui-update
