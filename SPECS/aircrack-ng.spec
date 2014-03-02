@@ -1,15 +1,11 @@
 Name:		aircrack-ng
-Version:	1.1
-Release:	%mkrel 7
+Version:	1.2
+Release:	%mkrel 1
 Summary:	Reliable 802.11 (wireless) sniffer and WEP key cracker
 License:	GPLv2+
 Group:		Networking/Other
 URL:		http://www.aircrack-ng.org/doku.php
-Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
-Patch0:		aircrack-ng-1.1-makefile-fixes.patch
-Patch1:		aircrack-ng-1.1-airodump-oui-destdir.patch
-Patch2:		aircrack-ng-1.1-ignore-channel-1-error.patch
-Patch3:		aircrack-ng-1.1-CVE-2010-1159.patch
+Source0:	http://download.aircrack-ng.org/%{name}-%{version}-beta2.tar.gz
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
 BuildRequires:	sqlite3-devel
@@ -23,11 +19,7 @@ capture files), and some tools to handle capture files (merge, convert,
 etc.).
 
 %prep
-%setup -q
-%patch0 -p1 -b .make_makeup~
-%patch1 -p1 -b .oui_destdir~
-%patch2 -p1
-%patch3 -p0 -b .CVE-2010-1159
+%setup -qn %{name}-%{version}-beta2
 
 %build
 export CFLAGS="%{optflags} -O3"
@@ -52,6 +44,6 @@ touch %{buildroot}%{_datadir}/%{name}/airodump-ng-oui.txt
 %doc ChangeLog README AUTHORS VERSION 
 %{_bindir}/*
 %{_sbindir}/*
-%{_mandir}/man1/*.1*
+%{_mandir}/*
 %dir %{_datadir}/aircrack-ng
 %ghost %{_datadir}/aircrack-ng/airodump-ng-oui.txt
