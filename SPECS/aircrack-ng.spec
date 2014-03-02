@@ -41,13 +41,13 @@ mkdir -p %{buildroot}%{_datadir}/%{name}
 # http://standards.ieee.org/regauth/oui/oui.txt
 touch %{buildroot}%{_datadir}/%{name}/airodump-ng-oui.txt
 
-%post 
+%post
 %{_sbindir}/airodump-ng-oui-update
 
 %files
-%doc ChangeLog README AUTHORS VERSION 
+%doc ChangeLog README AUTHORS VERSION
 %{_bindir}/*
 %{_sbindir}/*
-%{_mandir}/*
+%{_mandir}/man?/*
 %dir %{_datadir}/aircrack-ng
 %ghost %{_datadir}/aircrack-ng/airodump-ng-oui.txt
