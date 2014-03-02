@@ -1,26 +1,29 @@
+%define prerel	beta2
+%define rel	1
+
 Name:		aircrack-ng
 Version:	1.2
-Release:	%mkrel 1
+Release:	%mkrel -c %{prerel} %{rel}
 Summary:	Reliable 802.11 (wireless) sniffer and WEP key cracker
 License:	GPLv2+
 Group:		Networking/Other
 URL:		http://www.aircrack-ng.org/doku.php
-Source0:	http://download.aircrack-ng.org/%{name}-%{version}-beta2.tar.gz
+Source0:	http://download.aircrack-ng.org/%{name}-%{version}%{?prerel:-%prerel}.tar.gz
 
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
 BuildRequires:	sqlite3-devel
 
 %description
-aircrack-ng is a set of tools for auditing wireless networks. It's an 
-enhanced/reborn version of aircrack. It consists of airodump (an 802.11 
-packet capture program), aireplay (an 802.11 packet injection program), 
-aircrack (static WEP and WPA-PSK cracking), airdecap (decrypts WEP/WPA 
-capture files), and some tools to handle capture files (merge, convert, 
+aircrack-ng is a set of tools for auditing wireless networks. It's an
+enhanced/reborn version of aircrack. It consists of airodump (an 802.11
+packet capture program), aireplay (an 802.11 packet injection program),
+aircrack (static WEP and WPA-PSK cracking), airdecap (decrypts WEP/WPA
+capture files), and some tools to handle capture files (merge, convert,
 etc.).
 
 %prep
-%setup -qn %{name}-%{version}-beta2
+%setup -qn %{name}-%{version}%{?prerel:-%prerel}
 
 %build
 export CFLAGS="%{optflags} -O3"
