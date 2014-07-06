@@ -33,7 +33,6 @@ export LDFLAGS="%{ldflags}"
 %make -j4 datadir=%{_datadir} unstable=true sqlite=true
 
 %install
-%{__rm} -rf %{buildroot}
 %makeinstall unstable=true sqlite=true
 
 mkdir -p %{buildroot}%{_datadir}/%{name}
