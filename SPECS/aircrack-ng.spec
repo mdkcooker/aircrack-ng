@@ -1,5 +1,5 @@
 %define prerel	beta2
-%define rel	2
+%define rel	3
 
 Name:		aircrack-ng
 Version:	1.2
