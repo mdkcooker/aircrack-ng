@@ -1,5 +1,5 @@
-%define prerel	beta2
-%define rel	3
+%define prerel	rc1
+%define rel	1
 
 Name:		aircrack-ng
 Version:	1.2
@@ -13,6 +13,7 @@ Source0:	http://download.aircrack-ng.org/%{name}-%{version}%{?prerel:-%prerel}.t
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
 BuildRequires:	sqlite3-devel
+BuildRequires:	libnl3-devel
 
 %description
 aircrack-ng is a set of tools for auditing wireless networks. It's an
@@ -43,6 +44,9 @@ touch %{buildroot}%{_datadir}/%{name}/airodump-ng-oui.txt
 # move manual pages to a correct location
 mkdir -p %{buildroot}%{_mandir}/man1
 mv %{buildroot}%{_mandir}/*.1 %{buildroot}%{_mandir}/man1/
+
+# 1.2-rc1 no longer produces %%{_sbindir}/airdriver-ng, so remove its manpage
+rm -f %{buildroot}%{_mandir}/man8/airdriver-ng.8*
 
 %post
 %{_sbindir}/airodump-ng-oui-update
