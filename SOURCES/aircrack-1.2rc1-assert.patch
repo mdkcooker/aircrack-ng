@@ -1,0 +1,11 @@
+--- aircrack-ng-1.2-rc1/src/osdep/network.c.orig	2015-01-13 20:43:25.000000000 +0100
++++ aircrack-ng-1.2-rc1/src/osdep/network.c	2015-01-13 20:43:40.000000000 +0100
+@@ -131,7 +131,7 @@
+ 	if (!(plen <= *len))
+ 		printf("PLEN %d type %d len %d\n",
+ 			plen, nh.nh_type, *len);
+-	assert(plen <= *len && plen > 0); /* XXX */
++	assert(plen <= *len && plen >= 0); /* XXX */
+ 
+ 	*len = plen;
+ 	if ((*len) && (net_read_exact(s, arg, *len) == -1))

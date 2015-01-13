@@ -1,5 +1,5 @@
 %define prerel	rc1
-%define rel	1
+%define rel	2
 
 Name:		aircrack-ng
 Version:	1.2
@@ -9,6 +9,9 @@ License:	GPLv2+
 Group:		Networking/Other
 URL:		http://www.aircrack-ng.org/doku.php
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}%{?prerel:-%prerel}.tar.gz
+#fix the fix of Bug 14557
+Patch0:         aircrack-1.2rc1-assert.patch
+
 
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
@@ -25,6 +28,8 @@ etc.).
 
 %prep
 %setup -qn %{name}-%{version}%{?prerel:-%prerel}
+
+%patch0 -p1 -b .test
 
 %build
 export CFLAGS="%{optflags} -O3"
