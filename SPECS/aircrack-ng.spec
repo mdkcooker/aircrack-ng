@@ -29,7 +29,7 @@ etc.).
 %prep
 %setup -qn %{name}-%{version}%{?prerel:-%prerel}
 
-%patch0 -p1 -b .test
+%autopatch -p1
 
 %build
 export CFLAGS="%{optflags} -O3"
