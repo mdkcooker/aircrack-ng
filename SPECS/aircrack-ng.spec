@@ -12,11 +12,10 @@ Source0:	http://download.aircrack-ng.org/%{name}-%{version}%{?prerel:-%prerel}.t
 #fix the fix of Bug 14557
 Patch0:         aircrack-1.2rc1-assert.patch
 
-
-BuildRequires:	openssl-devel
-BuildRequires:	zlib-devel
-BuildRequires:	sqlite3-devel
-BuildRequires:	libnl3-devel
+BuildRequires:	pkgconfig(libcrypto)
+BuildRequires:	pkgconfig(libnl-genl-3.0)
+BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(zlib)
 
 %description
 aircrack-ng is a set of tools for auditing wireless networks. It's an
