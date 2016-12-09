@@ -37,19 +37,12 @@ export LDFLAGS="%{ldflags}"
 %make -j4 datadir=%{_datadir} unstable=true sqlite=true
 
 %install
-%makeinstall unstable=true sqlite=true
+%makeinstall mandir=%{buildroot}%{_mandir}/man1/ unstable=true sqlite=true
 
 mkdir -p %{buildroot}%{_datadir}/%{name}
 # License unclear, originates from:
 # http://standards.ieee.org/regauth/oui/oui.txt
 touch %{buildroot}%{_datadir}/%{name}/airodump-ng-oui.txt
-
-# move manual pages to a correct location
-mkdir -p %{buildroot}%{_mandir}/man1
-mv %{buildroot}%{_mandir}/*.1 %{buildroot}%{_mandir}/man1/
-
-# 1.2-rc1 no longer produces %%{_sbindir}/airdriver-ng, so remove its manpage
-rm -f %{buildroot}%{_mandir}/man8/airdriver-ng.8*
 
 %post
 %{_sbindir}/airodump-ng-oui-update
@@ -58,6 +51,6 @@ rm -f %{buildroot}%{_mandir}/man8/airdriver-ng.8*
 %doc ChangeLog README AUTHORS VERSION
 %{_bindir}/*
 %{_sbindir}/*
-%{_mandir}/man?/*
+%{_mandir}/man[18]/*
 %dir %{_datadir}/aircrack-ng
 %ghost %{_datadir}/aircrack-ng/airodump-ng-oui.txt
