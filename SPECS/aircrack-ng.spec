@@ -40,9 +40,6 @@ export LDFLAGS="%{ldflags}"
 %makeinstall mandir=%{buildroot}%{_mandir}/man1/ unstable=true sqlite=true
 
 mkdir -p %{buildroot}%{_datadir}/%{name}
-# License unclear, originates from:
-# http://standards.ieee.org/regauth/oui/oui.txt
-touch %{buildroot}%{_datadir}/%{name}/airodump-ng-oui.txt
 
 %post
 %{_sbindir}/airodump-ng-oui-update
