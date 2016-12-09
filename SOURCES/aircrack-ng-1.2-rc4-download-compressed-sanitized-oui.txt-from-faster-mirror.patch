@@ -1,11 +1,11 @@
-diff -up aircrack-ng-1.2-rc1/scripts/airodump-ng-oui-update~ aircrack-ng-1.2-rc1/scripts/airodump-ng-oui-update
---- aircrack-ng-1.2-rc1/scripts/airodump-ng-oui-update~	2016-12-09 01:13:40.146025772 +0100
-+++ aircrack-ng-1.2-rc1/scripts/airodump-ng-oui-update	2016-12-09 01:13:43.979074104 +0100
+diff -up aircrack-ng-1.2-rc4/scripts/airodump-ng-oui-update.oui~ aircrack-ng-1.2-rc4/scripts/airodump-ng-oui-update
+--- aircrack-ng-1.2-rc4/scripts/airodump-ng-oui-update.oui~	2016-12-09 01:28:19.685399496 +0100
++++ aircrack-ng-1.2-rc4/scripts/airodump-ng-oui-update	2016-12-09 01:29:37.469278905 +0100
 @@ -2,7 +2,7 @@
  
  CURL=`which curl 2>/dev/null`
  WGET=`which wget 2>/dev/null`
--OUI_DOWNLOAD_URL="http://standards.ieee.org/develop/regauth/oui/oui.txt"
+-OUI_DOWNLOAD_URL="http://standards-oui.ieee.org/oui.txt"
 +OUI_DOWNLOAD_URL="http://linuxnet.ca/ieee/oui.txt.bz2"
  
  OUI_PATH0="/etc/aircrack-ng"
@@ -24,4 +24,3 @@ diff -up aircrack-ng-1.2-rc1/scripts/airodump-ng-oui-update~ aircrack-ng-1.2-rc1
  	fi
  
  	if [ "${?}" -ne 0 ]; then
-diff -up aircrack-ng-1.2-rc1/scripts/.airodump-ng-oui-update.un~ aircrack-ng-1.2-rc1/scripts/.airodump-ng-oui-update.un

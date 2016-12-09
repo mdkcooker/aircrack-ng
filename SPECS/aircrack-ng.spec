@@ -1,5 +1,5 @@
-%define prerel	rc1
-%define rel	4
+%define prerel	rc4
+%define rel	1
 
 Name:		aircrack-ng
 Version:	1.2
@@ -9,9 +9,7 @@ License:	GPLv2+
 Group:		Networking/Other
 URL:		http://www.aircrack-ng.org/doku.php
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}%{?prerel:-%prerel}.tar.gz
-#fix the fix of Bug 14557
-Patch0:         aircrack-1.2rc1-assert.patch
-Patch1:		aircrack-ng-1.2-rc1-download-compressed-santized-oui.txt-from-faster-mirror.patch
+Patch1:		aircrack-ng-1.2-rc4-download-compressed-sanitized-oui.txt-from-faster-mirror.patch
 
 BuildRequires:	pkgconfig(libcrypto)
 BuildRequires:	pkgconfig(libnl-genl-3.0)
