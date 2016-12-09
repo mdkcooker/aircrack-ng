@@ -1,0 +1,27 @@
+diff -up aircrack-ng-1.2-rc1/scripts/airodump-ng-oui-update~ aircrack-ng-1.2-rc1/scripts/airodump-ng-oui-update
+--- aircrack-ng-1.2-rc1/scripts/airodump-ng-oui-update~	2016-12-09 01:13:40.146025772 +0100
++++ aircrack-ng-1.2-rc1/scripts/airodump-ng-oui-update	2016-12-09 01:13:43.979074104 +0100
+@@ -2,7 +2,7 @@
+ 
+ CURL=`which curl 2>/dev/null`
+ WGET=`which wget 2>/dev/null`
+-OUI_DOWNLOAD_URL="http://standards.ieee.org/develop/regauth/oui/oui.txt"
++OUI_DOWNLOAD_URL="http://linuxnet.ca/ieee/oui.txt.bz2"
+ 
+ OUI_PATH0="/etc/aircrack-ng"
+ OUI_PATH1="/usr/local/etc/aircrack-ng"
+@@ -51,10 +51,10 @@ if [ ${CURL} ] || [ ${WGET} ]; then
+ 	# Download it
+ 	echo "[*] Downloading IEEE OUI file..."
+ 
+-	if [ ${WGET} ]; then
+-		${WGET} ${OUI_DOWNLOAD_URL} -O ${OUI_IEEE} >/dev/null 2>/dev/null
++	if [ ${CURL} ]; then
++		${CURL} --progress-bar -L ${OUI_DOWNLOAD_URL} | bzcat > ${OUI_IEEE} 2>/dev/null
+ 	else
+-		${CURL} -L ${OUI_DOWNLOAD_URL} > ${OUI_IEEE} 2>/dev/null
++		${WGET} --no-verbose --progress=bar:noscroll --show-progress ${OUI_DOWNLOAD_URL} | bzcat > ${OUI_IEEE} 2>/dev/null
+ 	fi
+ 
+ 	if [ "${?}" -ne 0 ]; then
+diff -up aircrack-ng-1.2-rc1/scripts/.airodump-ng-oui-update.un~ aircrack-ng-1.2-rc1/scripts/.airodump-ng-oui-update.un
